@@ -29,4 +29,4 @@ class MenuCommand(Command):
             string += " > " + command + "\n"
         string += f'-----------------'
         print(string)
-        logging.info(string)
+        logging.info("Displayed List of Commands")

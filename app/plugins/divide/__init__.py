@@ -1,5 +1,6 @@
 import logging
 from app.commands import Command
+from app.save import SaveOperation
 from decimal import Decimal, InvalidOperation
 
 class DivideCommand(Command):
@@ -20,6 +21,7 @@ class DivideCommand(Command):
             res = self.reiterateList(argList)
             print(res)
             logging.info("Command 'divide' executed with arguments: " + str(args) + " and returned value \"" + str(res) + "\"")
+            SaveOperation(["divide",str(args)])
         except InvalidOperation:
             validList = list(filter(lambda x: x.isnumeric(), args))
             invalidList = list(filter(lambda x: not x.isnumeric(), args))

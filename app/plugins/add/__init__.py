@@ -1,6 +1,7 @@
 import logging
 from app.commands import Command
 from decimal import Decimal, InvalidOperation
+from app.save import SaveOperation
 
 class AddCommand(Command):
     def operation(self,a,b):
@@ -20,6 +21,7 @@ class AddCommand(Command):
             res = self.reiterateList(argList)
             print(res)
             logging.info("Command 'add' executed with arguments: " + str(args) + " and returned value \"" + str(res) + "\"")
+            SaveOperation(["add",str(args)])
         except InvalidOperation:
             validList = list(filter(lambda x: x.isnumeric(), args))
             invalidList = list(filter(lambda x: not x.isnumeric(), args))
