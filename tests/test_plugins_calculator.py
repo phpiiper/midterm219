@@ -1,8 +1,8 @@
 """Test the calculator's extra functions"""
-import pytest
-from app import App
 import os
+import pytest
 import pandas as pd
+from app import App
 
 def test_clear_history(capfd,monkeypatch):
     """Test that file clears"""
@@ -24,7 +24,7 @@ def test_delete_history(capfd,monkeypatch):
         app.start()
     assert e.value.code == 0, "The app did not exit as expected"
     csv_file_path = app.get_environment_variable("DATADIRNAME","./data") + "/" + app.get_environment_variable("HISTORYFILENAME")
-    assert os.path.exists(csv_file_path) == False
+    assert os.path.exists(csv_file_path) is False
 def test_history_calculator(capfd,monkeypatch):
     """Test that file saves and views operations correctly"""
     inputs = iter(['add 1 2', 'history','exit'])
