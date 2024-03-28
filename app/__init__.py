@@ -8,30 +8,43 @@ import logging
 import logging.config
 
 class App:
+    _instance = None
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(App, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+    
     def __init__(self):
         os.makedirs('logs', exist_ok=True)
-        self.configure_logging()
         load_dotenv()
         self.settings = self.load_environment_variables()
-        self.settings.setdefault('ENVIRONMENT', 'PRODUCTION')
+        self.configure_logging()
         self.command_handler = CommandHandler()
         self.commandList = []
-
+        self.load_plugins()
     def configure_logging(self):
-        logging_conf_path = 'logging.conf'
+        logging_conf_path = self.get_environment_variable("LOGGINGCONF",'logging.conf')
+        logging_file_name = self.get_environment_variable("LOGGINGPATH",'log')
+        logging_level = self.get_environment_variable("LOGGING","INFO")
+
         if os.path.exists(logging_conf_path):
             logging.config.fileConfig(logging_conf_path, disable_existing_loggers=False)
         else:
-            logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.info("Logging configured.")
+            logging.basicConfig(level=logging_level, format='%(asctime)s - %(levelname)s - %(message)s',filename=logging_file_name)
+        if logging_level:
+            logger = logging.getLogger()
+            logger.setLevel(logging_level)
+        logging.info(f"Logging configured.")
 
     def load_environment_variables(self):
         settings = {key: value for key, value in os.environ.items()}
         logging.info("Environment variables loaded.")
         return settings
 
-    def get_environment_variable(self, env_var: str = 'ENVIRONMENT'):
-        return self.settings.get(env_var, None)
+    def get_environment_variable(self, env_var, default=None):
+        if not self.settings.get(env_var):
+            return default
+        return self.settings.get(env_var)
 
     def load_plugins(self):
         plugins_package = 'app.plugins'
@@ -55,7 +68,8 @@ class App:
                 self.command_handler.register_command(plugin_name, item())
                 logging.info(f"Command '{plugin_name}' from plugin '{plugin_name}' registered.")
     def start(self):
-        self.load_plugins()
+        print("Application started. Type 'exit' to exit.")
+        print("Type 'menu' to list all commands.")
         logging.info("Application started. Type 'exit' to exit.")
         logging.info("Type 'menu' to list all commands.")
         try:
@@ -79,7 +93,6 @@ class App:
             sys.exit(0)
         finally:
             logging.info("Application shutdown.")
-
 if __name__ == "__main__":
     app = App()
     app.start()
