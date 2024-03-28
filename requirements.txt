@@ -1,11 +1,13 @@
 astroid==3.0.2
 blinker==1.4
+command-not-found==0.3
 coverage==7.4.1
 cryptography==3.4.8
 dbus-python==1.2.18
 dill==0.3.8
 distlib==0.3.8
 distro==1.7.0
+distro-info===1.1build1
 exceptiongroup==1.2.0
 Faker==23.2.1
 filelock==3.13.1
@@ -35,7 +37,7 @@ pyparsing==2.4.7
 pytest==8.0.0
 pytest-cov==4.1.0
 pytest-pylint==0.21.0
-python-apt==2.4.0
+python-apt==2.4.0+ubuntu1
 python-dateutil==2.8.2
 python-dotenv==1.0.1
 pytz==2024.1
