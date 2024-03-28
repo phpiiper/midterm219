@@ -13,27 +13,25 @@ class MultiplyCommand(Command):
                 result = self.operation(result,list[1])
                 list = list[1:]
             except:
-                return Exception
+                return InvalidOperation
         return result
     def execute(self,args):
+        opname = "multiply"
         try:
             argList = list(map(Decimal, args))
             res = self.reiterateList(argList)
             print(res)
-            logging.info("Command 'multiply' executed with arguments: " + str(args) + " and returned value \"" + str(res) + "\"")
-            SaveOperation(["multiply",str(args)])
+            logging.info("Command \'" + opname + "\' executed with arguments: " + str(args) + " and returned value \"" + str(res) + "\"")
+            SaveOperation([opname,args])
         except InvalidOperation:
+            print(f"Error: InvalidOperation")
             validList = list(filter(lambda x: x.isnumeric(), args))
             invalidList = list(filter(lambda x: not x.isnumeric(), args))
-            print(f"Invalid number input: {args} does not include valid numbers.")
-            print(f"Valid numbers: {validList}.")
-            print(f"Invalid numbers: {invalidList}.")
-            logging.info("Command 'multiply' error: " + f"Invalid number input: {args} does not include valid numbers.")
-            logging.info("Command 'multiply' error: " + f"Valid numbers: {validList}")
-            logging.info("Command 'multiply' error: " + f"Invalid numbers: {invalidList}")
-        except ZeroDivisionError:
-            print("Error: Division by zero.")
-            logging.info("Command 'multiply' error: " + "Error: Division by zero.")
-        except Exception as e: # Catch-all for unexpected errors
-            print(f"An error occurred: {e}")
-            logging.info("Command 'multiply' error: " + f"An error occurred: {e}")
+            logging.error(f"Command '{opname}' Error - Invalid number input: {args} does not include valid numbers.")
+            if len(validList) > 0:
+                logging.error(f"Command '{opname}' Error - Valid numbers: {validList}")
+            logging.error(f"Command '{opname}' Error: Invalid numbers: {invalidList}")
+        except Exception as e:
+            print(f"Error: Exception - {e}")
+            logging.error(f"Command '{opname}' Error: An error occurred: {e}")
+
