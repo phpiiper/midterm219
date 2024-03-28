@@ -1,6 +1,8 @@
 import logging
 import os
 import pandas as pd
+from app import App
+import json
 
 
 def SaveOperation(operation):
@@ -16,16 +18,12 @@ def SaveOperation(operation):
     oper_list = []
     if os.path.exists(csv_file_path):
         df_read = pd.read_csv(csv_file_path)
-        for item in df_read.iterrows():
-            oper_list.append([item[1][0],item[1][1]])
-    if (operation):
+        if not df_read.empty:
+            oper_list = [list(item) for item in df_read.values] if not df_read.empty else []
+    if operation:
         oper_list.append([operation[0],operation[1]])
-
-    df_data = pd.DataFrame(oper_list, columns=['Operation', 'Variables'])
+    app = App()
+    cols = json.loads(app.get_environment_variable("DATACOLUMNS",["Oper.","Vars."]))
+    df_data = pd.DataFrame(oper_list, columns=cols)
     df_data.to_csv(csv_file_path, index=False)
-        
-    logging.info(f"States saved to CSV at '{csv_file_path}'.")
-    csv_file_path = os.path.join(data_dir, 'calc_history.csv')
-    logging.info(f'the relative path  to save my file is {csv_file_path}')
-    absolute_path = os.path.abspath(csv_file_path)
-    logging.info(f'the absolute path  to save my file is {absolute_path}')
+    logging.info(f"Operation saved at '{csv_file_path}'.")
