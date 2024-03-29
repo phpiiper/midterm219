@@ -1,8 +1,10 @@
 astroid==3.1.0
 coverage==7.4.4
 dill==0.3.8
+distlib==0.3.8
 exceptiongroup==1.2.0
 Faker==24.4.0
+filelock==3.13.3
 iniconfig==2.0.0
 isort==5.13.2
 mccabe==0.7.0
@@ -14,9 +16,11 @@ pluggy==1.4.0
 pylint==3.1.0
 pytest==8.1.1
 python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
 pytz==2024.1
 six==1.16.0
 tomli==2.0.1
 tomlkit==0.12.4
 typing_extensions==4.10.0
 tzdata==2024.1
+virtualenv==20.25.1
