@@ -1,0 +1,7 @@
+Operation,Variables
+add,"['1', '2']"
+add,"['1', '2']"
+add,"['1', '2', '3']"
+divide,"['6', '2']"
+multiply,"['1', '2', '3']"
+subtract,"['1', '2', '3']"

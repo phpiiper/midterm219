@@ -23,7 +23,10 @@ jobs:
         pip install -r requirements.txt
     - name: Lint with pylint
       run: |
-        pylint **/*.py
-    - name: Test with pytest
+        pytest --pylint
+    - name: Run pytest
       run: |
-        pytest --cov=./
+        pytest
+    - name: Test coverage of tests
+      run: |
+        pytest --cov

@@ -1,20 +1,21 @@
+"""Saves operations to CSV file"""
 import logging
 import os
+import json
 import pandas as pd
 from app import App
-import json
 
 
-def SaveOperation(operation):
+def SaveOperation(operation): # pylint: disable=invalid-name
+    """Saves an operation, called by successfully inputting one and executing operation"""
     app = App()
     data_dir = app.get_environment_variable("DATADIRNAME",'./data')
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
-        logging.info(f"The directory '{data_dir}' is created.")
+        logging.info("The directory '%s' is created.",data_dir)
     elif not os.access(data_dir, os.W_OK):
-        logging.error(f"The directory '{data_dir}' is not writable.")
+        logging.error("The directory '%s' is not writable.",data_dir)
         return
-    
     fn = app.get_environment_variable("HISTORYFILENAME","history.csv")
     csv_file_path = os.path.join(data_dir, fn)
     oper_list = []
@@ -27,4 +28,4 @@ def SaveOperation(operation):
     cols = json.loads(app.get_environment_variable("DATACOLUMNS",["Oper.","Vars."]))
     df_data = pd.DataFrame(oper_list, columns=cols)
     df_data.to_csv(csv_file_path, index=False)
-    logging.info(f"Operation saved at '{csv_file_path}'.")
+    logging.info("Operation saved at '%s'.",csv_file_path)
