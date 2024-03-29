@@ -16,7 +16,7 @@ def test_menu_command(capfd,monkeypatch):
     inputs = iter(['menu', 'exit'])
     monkeypatch.setattr('builtins.input', lambda _: next(inputs))
     app = App()
-    with pytest.raises(SystemExit) as e:
+    with pytest.raises(SystemExit):
         app.start()
     assert "\nList of Commands: \n" in capfd.readouterr().out
 
