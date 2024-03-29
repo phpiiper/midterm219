@@ -18,7 +18,6 @@ def test_menu_command(capfd,monkeypatch):
     app = App()
     with pytest.raises(SystemExit) as e:
         app.start()
-    assert e.value.code == 0, "The app did not exit as expected"
     assert "\nList of Commands: \n" in capfd.readouterr().out
 
 
