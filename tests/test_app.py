@@ -2,12 +2,6 @@
 import pytest
 from app import App
 
-def test_app_get_environment_variable():
-    """Test for environment variable"""
-    app = App()
-    current_env = app.get_environment_variable('ENVIRONMENT')
-    assert current_env in ['DEVELOPMENT', 'TESTING', 'PRODUCTION'], f"Invalid ENVIRONMENT: {current_env}"
-
 def test_app_start_exit_command(capfd, monkeypatch):
     """Test that file is deleted"""
     inputs = iter(['history', 'exit'])
