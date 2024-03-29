@@ -14,5 +14,3 @@ class DeleteCommand(Command):
         if os.path.exists(csv_file_path):
             logging.info("Deleted file: %s",csv_file_path)
             os.remove(csv_file_path)
-        else:
-            print("File cannot be deleted.")

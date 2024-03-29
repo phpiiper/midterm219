@@ -20,7 +20,6 @@ def test_menu_command(capfd,monkeypatch):
         app.start()
     assert "\nList of Commands: \n" in capfd.readouterr().out
 
-
 def test_app_start_unknown_command(capfd, monkeypatch):
     """Test how the REPL handles an unknown command before exiting."""
     inputs = iter(['unknown_command', 'exit'])
