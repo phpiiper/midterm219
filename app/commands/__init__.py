@@ -6,7 +6,7 @@ class Command(ABC):
     @abstractmethod
     def execute(self):
         """Placeholder for executing function"""
-        pass # pylint: disable=unncessary-pass
+        pass # pylint: disable=unnecessary-pass
 
 class CommandHandler:
     """Handles commands from plugins"""

@@ -1,13 +1,16 @@
+"""Clears operations from CSV file"""
 import logging
 import os
-from app.commands import Command
+import json
 import pandas as pd
 from app import App
-import json
+from app.commands import Command
 
 
 class ClearCommand(Command):
+    """Clears operations from CSV file"""
     def execute(self):
+        """Executes function"""
         app = App()
         data_dir = './data'
         csv_file_path = os.path.join(data_dir, 'calc_history.csv')
@@ -17,6 +20,6 @@ class ClearCommand(Command):
             df_data = pd.DataFrame(columns=cols)
             df_data.to_csv(csv_file_path, index=False)
             logging.info("Cleared ")
-        except Exception as e:
-            logging.error(f"File cannot be cleared: {e}")
+        except Exception as e: # pylint: disable=broad-exception-caught
+            logging.error("File cannot be cleared: %s",e)
         
